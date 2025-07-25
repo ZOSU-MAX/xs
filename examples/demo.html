@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XS框架示例 - 响应式计数器</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; }
+        .counter { text-align: center; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .count { font-size: 4rem; margin: 2rem 0; color: #333; }
+        button { padding: 0.8rem 1.5rem; margin: 0 0.5rem; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+        .increment { background-color: #4CAF50; color: white; }
+        .decrement { background-color: #f44336; color: white; }
+        .reset { background-color: #2196F3; color: white; }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <!-- 引入打包后的XS框架 -->
+    <script src="../dist/bundle.js"></script>
+
+    <script>
+        // 从全局XS对象获取框架API
+        const { createApp, reactive } = window.XS;
+
+        // 创建计数器组件
+        const CounterApp = {
+            // 组件初始化函数
+            setup() {
+                // 创建响应式状态
+                const state = reactive({
+                    count: 0
+                });
+
+                // 定义修改状态的方法
+                const increment = () => { state.count++ };
+                const decrement = () => { state.count-- };
+                const reset = () => { state.count = 0 };
+
+                // 返回状态和方法供模板使用
+                return { state, increment, decrement, reset };
+            },
+
+            // 渲染函数
+            render() {
+                // 使用h函数创建虚拟DOM
+                const { h } = window.XS;
+                return h('div', { class: 'counter' }, [
+                    h('h1', null, 'XS框架响应式计数器'),
+                    h('div', { class: 'count' }, this.state.count),
+                    h('div', null, [
+                        h('button', { class: 'decrement', onclick: this.decrement }, '-'),
+                        h('button', { class: 'reset', onclick: this.reset }, '重置'),
+                        h('button', { class: 'increment', onclick: this.increment }, '+')
+                    ])
+                ]);
+            }
+        };
+
+        // 创建并挂载应用
+        createApp(CounterApp).mount('#app');
+    </script>
+</body>
+</html>

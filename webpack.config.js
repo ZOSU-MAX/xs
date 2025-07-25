@@ -2,11 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    clean: true
+    clean: true,
+    library: 'XS',
+    libraryTarget: 'window',
+    globalObject: 'window',
+    libraryExport: 'default'
   },
   module: {
     rules: [
@@ -22,5 +26,5 @@ module.exports = {
       filename: 'index.html'
     })
   ],
-  mode: 'production'
+  mode: 'development'
 };
