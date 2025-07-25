@@ -10,11 +10,19 @@
  */
 function h(tag, props = {}, children = []) {
   console.log('Starting vnode creation with tag:', tag, 'props:', props, 'raw children:', children);
-  // 如果children是字符串，转换为文本节点
-  if (typeof children === 'string') {
-    children = [{ type: 'text', text: children }];
-    console.log('Converted string children to text node array:', children);
+  // 确保children始终是数组
+  if (!Array.isArray(children)) {
+    children = [children];
+    console.log('Converted non-array children to array:', children);
   }
+  // 将字符串子节点转换为文本节点对象
+  children = children.map(child => {
+    if (typeof child === 'string') {
+      return { type: 'text', text: child };
+    }
+    return child;
+  });
+  console.log('Processed children array:', children);
   
   const vnode = {
     type: 'vnode',

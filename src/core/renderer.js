@@ -64,7 +64,9 @@ function createElement(vnode) {
 
     // 处理子节点 - 确保只对元素节点进行操作
     if (vnode.children && el.nodeType === 1) {
-      vnode.children.forEach(child => {
+      // 确保children始终是数组
+      const children = Array.isArray(vnode.children) ? vnode.children : [vnode.children];
+      children.forEach(child => {
           if (typeof child === 'string') {
             // 文本子节点
             const textNode = document.createTextNode(child);

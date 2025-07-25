@@ -48,7 +48,7 @@
                 const { h } = window.XS;
                 return h('div', { class: 'counter' }, [
                     h('h1', null, 'XS框架响应式计数器'),
-                    h('div', { class: 'count' }, this.state.count),
+                    h('div', { class: 'count' }, String(this.state.count)),
                     h('div', null, [
                         h('button', { class: 'decrement', onclick: this.decrement }, '-'),
                         h('button', { class: 'reset', onclick: this.reset }, '重置'),
